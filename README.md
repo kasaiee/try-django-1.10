@@ -13,6 +13,9 @@ installation
 - create database by typing `python manage.py migrate`
 - run your server by typing `python manage.py runserver`
 
+> **Note:**
+
+> - You need to create an admin user to manage your blog site by this command: `python manage.py createsuperuser`
 
 #### Follow me
 - [Github](https://github.com/kasaiee)
