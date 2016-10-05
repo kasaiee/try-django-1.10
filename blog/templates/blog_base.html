@@ -1,0 +1,118 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {% block title %}
+            {% trans "Blog" %}
+        {% endblock title %}
+    </title>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+<style type="text/css">
+    @font-face {
+        font-family: vazir;
+        src: {% static "fonts/vazir/vazir.woff" %};
+    }
+
+    body {
+        font-family: vazir;
+        direction: rtl
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="navbar-header pull-right">
+        <a class="navbar-brand" href="/">{% trans "BLOG" %}</a>
+    </div>
+    <ul class="nav navbar-nav pull-right">
+        <li><a href="{% url 'blog:list' %}">{% trans "posts" %}</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'blog:create' %}">{% trans "create post" %}</a></li>            
+        {% endif %}
+    </ul>
+    
+    
+
+    {% if request.user.is_superuser %}        
+        <a class="btn btn-success pull-left" style="margin-top: 7px; margin-left: 10px;" href="/admin">{% trans "dashboard" %}</a>
+    {% else %}
+        <a class="btn btn-success pull-left" style="margin-top: 7px; margin-left: 10px;" href="/admin">
+        <i class="fa fa-sign-in"></i>
+        {% trans "login" %}</a>
+    {% endif %}
+
+
+    {% if user.is_authenticated %}
+        <a class="btn btn-warning pull-left" style="margin-top: 7px; margin-left: 10px;" href="/admin/logout">{% trans "log out" %}</a>
+    {% endif %}
+
+
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info pull-left" style="margin-top: 7px; margin-left: 10px;" data-toggle="modal" data-target="#myModal">
+        <i class="fa fa-search"></i>
+        {% trans "search" %}
+    </button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{% trans "Blog Search" %}</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-inline" method="GET" action="">
+                <input type="text" class="form-control" name="q" size="50" placeholder="Email Address" required="">
+                <button type="submit" class="btn btn-danger">{% trans "search" %}</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</nav>
+
+
+<div class="container">
+{% block messages %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {% if 'safe' in message.tags%}
+                {{ message|safe }}
+            {% else %}
+                {{ message }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock messages %}
+</div>
+
+
+
+{% block content %}
+    <div class="text-center">
+        <h1>{% trans "BLOG SITE" %}</h1>
+    </div>
+{% endblock content %}
+
+<script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+</body>
+</html>
