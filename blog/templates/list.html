@@ -4,34 +4,37 @@
     {{ block.super }}
 <div class="container">
     {% for post in posts %}
-    <div class="row" style="padding: 10px; background-color: {% cycle '#F6F8FD;' '#FFF' %}">
-        {% if  post.image %}
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3">
+        <div class="panel-group">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {% if  post.image %}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3">
+                            <a href="{% url 'blog:detail' id=post.id %}">
+                                <img class="img-responsive img-rounded" src="{{ post.image.url }}" style="max-height: 350px; margin: 0 auto;">
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                <h2>
                     <a href="{% url 'blog:detail' id=post.id %}">
-                        <img class="img-responsive img-rounded" src="{{ post.image.url }}" style="max-height: 350px; margin: 0 auto;">
+                        {{ post.title }}
                     </a>
-                </div>
+                    <br>
+                    <small>{{ post.updateDateTime|timesince }} {% trans "ago" %}</small>
+                </h2>
+                <p>{{ post.content|safe|truncatewords_html:50 }}</p>
+                <a href="{% url 'blog:detail' id=post.id %}" class="btn btn-default">{% trans "view" %}</a>
+                <br>
+                <small>
+                {% if user.is_authenticated %}
+                    <a class="btn btn-danger btn-xs" href="{% url 'blog:delete' id=post.id %}">{% trans "delete" %}</a>
+                    <a class="btn btn-primary btn-xs" href="{% url 'blog:edit' id=post.id %}">{% trans "edit" %}</a>
+                {% endif %}
+                </small>
+              </div>
             </div>
-        {% endif %}
-        <h2>
-            <a href="{% url 'blog:detail' id=post.id %}">
-                {{ post.title }}
-            </a>
-            <br>
-            <small>{{ post.updateDateTime|timesince }} {% trans "ago" %}</small>
-        </h2>
-        <p>{{ post.content|safe|truncatewords_html:50 }}</p>
-        <a href="{% url 'blog:detail' id=post.id %}" class="btn btn-default">{% trans "view" %}</a>
-        <br>
-        <small>
-        {% if user.is_authenticated %}
-            <a class="btn btn-danger btn-xs" href="{% url 'blog:delete' id=post.id %}">{% trans "delete" %}</a>
-            <a class="btn btn-primary btn-xs" href="{% url 'blog:edit' id=post.id %}">{% trans "edit" %}</a>
-        {% endif %}
-        </small>
-    </div>
-    <hr>
+        </div>
     {% endfor %}
 
 <div class="row">
@@ -42,7 +45,7 @@
             {% endif %}
 
             <span class="current">
-                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+                {% trans "Page" %} {{ posts.number }} {% trans "of" %} {{ posts.paginator.num_pages }}.
             </span>
 
             {% if posts.has_next %}
