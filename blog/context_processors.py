@@ -2,8 +2,8 @@ from django.db.models import Q
 from .models import Blog
 
 def search(request):
-    if request.GET:
-        query = request.GET['q']
+    if request.GET.get('q'):
+        query = request.GET.get('q')
         search_result = Blog.objects.filter(
                 Q(title__icontains=query)|
                 Q(content__icontains=query)
