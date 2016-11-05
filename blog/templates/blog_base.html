@@ -105,13 +105,26 @@
 </div>
 
 
-
-{% block content %}
-    <div class="text-center">
-        <h1>{% trans "BLOG SITE" %}</h1>
+{% if search_result %}
+    <div class="container">
+        <div class="panel-group">
+            {% for result in search_result %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><a href="{% url 'blog:detail' id=result.id %}">{{ result.title }}</a></h4>
+                    </div>
+                    <div class="panel-body">{{ result.content|safe|truncatewords_html:50 }}</div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-{% endblock content %}
-
+{% else %}
+    {% block content %}
+        <div class="text-center">
+            <h1>{% trans "BLOG SITE" %}</h1>
+        </div>
+    {% endblock content %}
+{% endif %}
 <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
 </body>
