@@ -6,7 +6,7 @@ class BlogForm(ModelForm):
     
     class Meta:
         model = models.Blog
-        fields = ('title', 'image', 'content')
+        fields = ('title', 'image', 'content', 'attach_file')
         widgets = {
             'content': Textarea(attrs={'cols': 80, 'rows': 2}),
         }

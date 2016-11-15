@@ -12,6 +12,7 @@ class Blog(models.Model):
     title = models.CharField(_('title'), max_length=120)
     image = models.ImageField(_('main image'), upload_to='blog/%Y-%m-%d', blank=True, null=True)
     content = RichTextUploadingField(_('content'), config_name='default')
+    attach_file = models.FileField(_('Attach File'), null=True, blank=True, help_text=_('this is optional.'))
     updateDateTime = models.DateTimeField(_('create date'), auto_now_add=True, auto_now=False)
     createDateTime = models.DateTimeField(_('update date'), auto_now_add=False, auto_now=True)
 
