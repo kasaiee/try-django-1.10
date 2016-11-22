@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.contrib import messages
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -52,6 +52,8 @@ def detail(request, id):
 
 
 def create(request):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     form = BlogForm(request.POST or None, request.FILES,)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -65,6 +67,8 @@ def create(request):
 
 
 def edit(request, id=None):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     instance = get_object_or_404(Blog, id=id)
     form = BlogForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
@@ -79,6 +83,8 @@ def edit(request, id=None):
 
 
 def delete(request, id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     post = get_object_or_404(Blog, id=id)
     if post.delete():
         messages.success(request, _('item deleted successfully!'), extra_tags='alert alert-success')
