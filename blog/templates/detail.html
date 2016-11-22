@@ -18,8 +18,10 @@
     </div>
     <p>{{ post.content|safe }}</p>
     <hr>
-    <a href="{{ post.attach_file.url }}"> دانلود فایل ضمیمه </a>
-    <br>
+    {% if post.attach_file %}    
+        <a href="{{ post.attach_file.url }}"> دانلود فایل ضمیمه </a>
+        <br>
+    {% endif %}
     <small>{{ post.updateDateTime }}</small>
     <br>
     <br>
