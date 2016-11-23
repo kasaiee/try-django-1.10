@@ -1,13 +1,11 @@
-from django.forms import ModelForm, Textarea
+from django import forms
 import models
 from ckeditor.widgets import CKEditorWidget
 
-class BlogForm(ModelForm):
-    
+class BlogForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget()),
+
     class Meta:
         model = models.Blog
         fields = ('title', 'image', 'content', 'attach_file')
-        widgets = {
-            'content': Textarea(attrs={'cols': 80, 'rows': 2}),
-        }
         
