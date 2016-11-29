@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     #ckeditor field
     'ckeditor',
     'ckeditor_uploader',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
