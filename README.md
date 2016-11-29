@@ -8,6 +8,7 @@ installation
  - python 2.7
   install following packages via **pip** or **easy_install**
  - `pip install django==1.10.2`
+ - `pip install djangorestframework==3.5.2`
  - `pip install django-ckeditor==5.1.1`
  - `pip install wheel==0.24.0`
  - `pip install pillow==3.4.0`
