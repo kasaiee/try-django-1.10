@@ -22,9 +22,9 @@ urlpatterns = [
     url(r'^', include('blog.urls', namespace='blog')),
 
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    
+
     # api urls 
-    url(r'^api/', include('blog.api.urls', namespace='api')),
+    url(r'^api/', include('blog.api.urls', namespace='blog-api')),
 ]
 
 if settings.DEBUG:

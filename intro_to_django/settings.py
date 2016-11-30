@@ -42,6 +42,9 @@ INSTALLED_APPS = (
     #ckeditor field
     'ckeditor',
     'ckeditor_uploader',
+
+    'django_filters', # for use DjangoFilterBackend in filtering apis
+    'crispy_forms', # for show filtering apis form in web interface
     'rest_framework',
 )
 
