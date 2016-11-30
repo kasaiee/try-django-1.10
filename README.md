@@ -9,6 +9,8 @@ installation
   install following packages via **pip** or **easy_install**
  - `pip install django==1.10.2`
  - `pip install djangorestframework==3.5.2`
+ - `pip install django-filter==1.0.1`
+ - `pip install django-crispy-forms==1.6.1`
  - `pip install django-ckeditor==5.1.1`
  - `pip install wheel==0.24.0`
  - `pip install pillow==3.4.0`
@@ -21,11 +23,13 @@ installation
 
 Create url: open teminal and type bellow url. Note that httpie must be installed.
 
-`$ http -a admin:asdf@1234 http://127.0.0.1:8000/api/create/ title='post 1' content='my content' owner=1`
+`$ http -a <USERNAME>:<PASSWORD> http://127.0.0.1:8000/api/create/ title='<YOUR_TITLE>' content='<YOUR_CONTENT>' owner=<OWNER_ID>`
 
 Delete url: open teminal and type bellow url.
 
-`$ http DELETE http://127.0.0.1:8000/api/6/delete`
+`$ http -a <USERNAME>:<PASSWORD> DELETE http://127.0.0.1:8000/api/<POST_ID>/delete`
+
+
 
 
 #### Follow me
