@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.contrib import messages
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import (
     Paginator, 
     EmptyPage, 
@@ -70,8 +71,15 @@ def edit(request, id=None):
     if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
     instance = get_object_or_404(Blog, id=id)
+    
+    # check just owner and superuser can edit current post
+    if not request.user.is_superuser and request.user != instance.owner:
+        raise PermissionDenied
+    
     form = BlogForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
+        instance = form.save(commit=False)
+        instance.owner = request.user
         form.save()
         messages.success(request, _('updated successfully!!'), extra_tags='alert alert-success')
         return HttpResponseRedirect(instance.get_absolute_url())
