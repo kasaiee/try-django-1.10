@@ -11,7 +11,10 @@ class OwnerCanManageOrReadOnly(BasePermission):
         self.message = 'Your request does not have permission or you are is not the post owner!'
         if request.method in SAFE_METHODS:
             return True
-        return False
+        elif not request.user.is_anonymous:
+            return True
+        else:
+            return False
 
 
     # It is check general permission on object level
