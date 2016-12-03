@@ -106,7 +106,7 @@ class PostCreateAPIView(generics.CreateAPIView):
 
     queryset = Blog.objects.all()
     serializer_class = PostCreateSerializer
-    permission_classes = (OwnerCanManageOrReadOnly,)
+    permission_classes = (IsAdminUser,)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
