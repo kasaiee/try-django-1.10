@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Blog
+from .models import Blog, BlogGroup
 
 
 class BlogAdmin(admin.ModelAdmin):
@@ -10,4 +10,5 @@ class BlogAdmin(admin.ModelAdmin):
     search_fields = ('title', 'image', 'content', 'createDateTime', 'updateDateTime')
 
 
+admin.site.register(BlogGroup)
 admin.site.register(Blog, BlogAdmin)
