@@ -8,13 +8,16 @@ from rest_framework.filters import (
 
 from rest_framework.permissions import IsAdminUser, AllowAny
 
-from blog.models import Blog
+from blog.models import Blog, BlogGroup
 from .permissions import OwnerCanManageOrReadOnly
 from .pagination import (
     PostPageNumberPagination,
     PostLimitOffsetPagination
     )
 from .serializers import (
+    GroupListSerializer,
+    GroupDetailSerializer,
+
     PostListSerializer,
     PostDetailSerializer,
     PostCreateSerializer,
@@ -24,6 +27,8 @@ from .serializers import (
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
 
+
+########### POST SERIALIZER ###########
 class PostListAPIView(generics.ListAPIView):
     '''
     write api documentation here in markdown syntax
@@ -145,3 +150,33 @@ class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
         # you can send email here and etc. this email send when serializer update
+
+
+########### GROUP SERIALIZER ###########\
+class GroupListAPIView(generics.ListAPIView):
+    queryset = BlogGroup.objects.all()
+    serializer_class = GroupListSerializer
+
+
+class GroupDetailAPIView(generics.RetrieveAPIView):
+    queryset = BlogGroup.objects.all()
+    serializer_class = GroupDetailSerializer
+    lookup_field = 'id'
+
+
+########## USER SERIALIZER #########
+from django.contrib.auth import get_user_model
+User = get_user_model()
+from serializers import (
+    UserListSerializer,
+    UserCreateSerializer,
+    )
+
+class UserListAPIView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+
+
+class UserCreateAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserCreateSerializer
