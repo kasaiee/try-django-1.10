@@ -20,13 +20,17 @@ installation
 
 > - You need to create an admin user to manage your blog site by this command: `python manage.py createsuperuser`
 
-Create url: open teminal and type bellow url. Note that httpie must be installed.
+Create url: open teminal and type this url. Note that httpie must be installed.
 
 `$ http -a <USERNAME>:<PASSWORD> http://127.0.0.1:8000/api/create/ title='<YOUR_TITLE>' content='<YOUR_CONTENT>' owner=<OWNER_ID>`
 
-Delete url: open teminal and type bellow url.
+Delete url: open teminal and type this url.
 
 `$ http -a <USERNAME>:<PASSWORD> DELETE http://127.0.0.1:8000/api/<POST_ID>/delete`
+
+Update url: open teminal and type this url.
+
+`$ http -a <USERNAME>:<PASSWORD> PUT http://127.0.0.1:8000/api/<POST_ID>/edit title='<YOUR_TITLE>' content='<YOUR_CONTENT>' owner=<OWNER_ID>``
 
 
 
